@@ -124,7 +124,9 @@ class App extends Component {
               <div className="col s12 m8 offset-m2">
                 <div className="card">
                   <div className="card-content">
-                    <div className="card-title">{this.state.title}</div>
+                    <div id="timer-label" className="card-title">
+                      {this.state.title}
+                    </div>
                     <h1 id="time-left">{this.state.timeLeft}</h1>
                     <button
                       id="start_stop"
