@@ -17,7 +17,7 @@ class App extends Component {
   lengthIncreaseHandler = cat => {
     if (cat === 'Break Length') {
       let valCurrent = this.getMins(this.state.breakLength);
-      if (valCurrent === 60) {
+      if (valCurrent === 59) {
         return;
       }
       valCurrent += 1;
@@ -25,7 +25,7 @@ class App extends Component {
     }
     if (cat === 'Session Length') {
       let valCurrent = this.getMins(this.state.sessionLength);
-      if (valCurrent === 60) {
+      if (valCurrent === 59) {
         return;
       }
       valCurrent += 1;
@@ -64,7 +64,9 @@ class App extends Component {
                   <div className="card-content">
                     <div className="card-title">Pomodoro Clock</div>
                     <h1>00:00</h1>
-                    <button className="btn">Start</button>
+                    <button id="start_stop" className="btn">
+                      Start
+                    </button>
                     <div className="row">
                       <Controller
                         title="Break Length"
