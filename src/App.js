@@ -8,6 +8,24 @@ class App extends Component {
     breakLength: '5:00'
   };
 
+  lengthIncreaseHandler = cat => {
+    if (cat === 'Break Length') {
+      console.log('break up clicked');
+    }
+    if (cat === 'Session Length') {
+      console.log('session up clicked');
+    }
+  };
+
+  lengthDecreaseHandler = cat => {
+    if (cat === 'Break Length') {
+      console.log('break down clicked');
+    }
+    if (cat === 'Session Length') {
+      console.log('session down clicked');
+    }
+  };
+
   render() {
     return (
       <div className="App">
@@ -24,10 +42,14 @@ class App extends Component {
                       <Controller
                         title="Break Length"
                         length={this.state.breakLength}
+                        lengthDecreased={this.lengthDecreaseHandler}
+                        lengthIncreased={this.lengthIncreaseHandler}
                       />
                       <Controller
                         title="Session Length"
                         length={this.state.sessionLength}
+                        lengthDecreased={this.lengthDecreaseHandler}
+                        lengthIncreased={this.lengthIncreaseHandler}
                       />
                     </div>
                   </div>

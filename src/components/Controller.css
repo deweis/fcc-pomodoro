@@ -6,3 +6,7 @@
   padding: 15px;
   font-size: 1.3em;
 }
+
+.fas:hover {
+  cursor: pointer;
+}
