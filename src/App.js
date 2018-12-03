@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
+import Controller from './components/Controller';
 
 class App extends Component {
+  state = {
+    sessionLength: '25:00',
+    breakLength: '5:00'
+  };
+
   render() {
     return (
       <div className="App">
@@ -15,36 +21,14 @@ class App extends Component {
                     <h1>00:00</h1>
                     <button className="btn">Start</button>
                     <div className="row">
-                      <div className="col s6">
-                        <h5>Break Length</h5>
-                        <div style={{ margin: '10px' }}>
-                          <i class="fas fa-arrow-down" />
-                          <span
-                            style={{
-                              padding: '15px',
-                              fontSize: '1.3em'
-                            }}
-                          >
-                            5
-                          </span>
-                          <i class="fas fa-arrow-up" />
-                        </div>
-                      </div>
-                      <div className="col s6">
-                        <h5>Session Length</h5>
-                        <div style={{ margin: '10px' }}>
-                          <i class="fas fa-arrow-down" />
-                          <span
-                            style={{
-                              padding: '15px',
-                              fontSize: '1.3em'
-                            }}
-                          >
-                            25
-                          </span>
-                          <i class="fas fa-arrow-up" />
-                        </div>
-                      </div>
+                      <Controller
+                        title="Break Length"
+                        length={this.state.breakLength}
+                      />
+                      <Controller
+                        title="Session Length"
+                        length={this.state.sessionLength}
+                      />
                     </div>
                   </div>
                 </div>
