@@ -5,7 +5,9 @@ import Controller from './components/Controller';
 class App extends Component {
   state = {
     sessionLength: '25:00',
-    breakLength: '5:00'
+    breakLength: '5:00',
+    timeLeft: '25:00',
+    title: 'Pomodoro Clock'
   };
 
   /* Helper function to get the minutes of a full length */
@@ -53,6 +55,20 @@ class App extends Component {
     }
   };
 
+  /* Click the Start Button */
+  startClickHandler = () => {
+    this.setState({ title: 'Session' });
+  };
+
+  /* Click the Reset Button */
+  resetClickHandler = () => {
+    this.setState({
+      sessionLength: '25:00',
+      breakLength: '5:00',
+      title: 'Pomodoro Clock'
+    });
+  };
+
   render() {
     return (
       <div className="App">
@@ -62,12 +78,20 @@ class App extends Component {
               <div className="col s12 m8 offset-m2">
                 <div className="card">
                   <div className="card-content">
-                    <div className="card-title">Pomodoro Clock</div>
-                    <h1>00:00</h1>
-                    <button id="start_stop" className="btn">
+                    <div className="card-title">{this.state.title}</div>
+                    <h1 id="time-left">{this.state.timeLeft}</h1>
+                    <button
+                      id="start_stop"
+                      className="btn"
+                      onClick={this.startClickHandler}
+                    >
                       Start
                     </button>
-                    <button id="reset" className="btn">
+                    <button
+                      id="reset"
+                      className="btn"
+                      onClick={this.resetClickHandler}
+                    >
                       Reset
                     </button>
                     <div className="row">
