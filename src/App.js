@@ -68,12 +68,14 @@ class App extends Component {
                     <div className="row">
                       <Controller
                         title="Break Length"
+                        id="break"
                         length={this.state.breakLength}
                         lengthDecreased={this.lengthDecreaseHandler}
                         lengthIncreased={this.lengthIncreaseHandler}
                       />
                       <Controller
                         title="Session Length"
+                        id="session"
                         length={this.state.sessionLength}
                         lengthDecreased={this.lengthDecreaseHandler}
                         lengthIncreased={this.lengthIncreaseHandler}

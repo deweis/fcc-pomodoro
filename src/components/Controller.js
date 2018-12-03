@@ -7,7 +7,7 @@ const Controller = props => {
 
   return (
     <div className="col s6">
-      <h5>{props.title}</h5>
+      <h5 id={`${props.id}-label`}>{props.title}</h5>
       <div className="controller">
         <button className="btn-arrow">
           <i
