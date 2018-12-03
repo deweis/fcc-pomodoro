@@ -67,6 +67,9 @@ class App extends Component {
                     <button id="start_stop" className="btn">
                       Start
                     </button>
+                    <button id="reset" className="btn">
+                      Reset
+                    </button>
                     <div className="row">
                       <Controller
                         title="Break Length"
