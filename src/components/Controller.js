@@ -19,6 +19,7 @@ const Controller = props => {
         <span className="length">{lengthNum}</span>
         <button className="btn-arrow">
           <i
+            id={`${props.id}-increment`}
             className="fas fa-arrow-up"
             onClick={() => props.lengthIncreased(props.title)}
           />
