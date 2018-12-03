@@ -1,12 +1,27 @@
 .controller {
-  margin: 10px;
-}
-
-.length {
-  padding: 15px;
+  margin: 10px 0;
   font-size: 1.3em;
 }
 
-.fas:hover {
+.length {
+  display: inline-block;
+  width: 48px;
+}
+
+.btn-arrow {
+  background: none;
+  border: none;
+}
+
+.btn-arrow:focus {
+  background: none;
+  color: #26a69a;
+}
+.btn-arrow:hover {
   cursor: pointer;
+  color: #26a69a;
+}
+
+.btn-arrow:active {
+  color: #fff;
 }

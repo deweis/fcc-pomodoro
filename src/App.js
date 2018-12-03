@@ -8,21 +8,48 @@ class App extends Component {
     breakLength: '5:00'
   };
 
+  /* Helper function to get the minutes of a full length */
+  getMins = length => {
+    return Number(length.slice(0, length.indexOf(':')));
+  };
+
+  /* Increase a duration on a controller */
   lengthIncreaseHandler = cat => {
     if (cat === 'Break Length') {
-      console.log('break up clicked');
+      let valCurrent = this.getMins(this.state.breakLength);
+      if (valCurrent === 60) {
+        return;
+      }
+      valCurrent += 1;
+      this.setState({ breakLength: `${valCurrent}:00` });
     }
     if (cat === 'Session Length') {
-      console.log('session up clicked');
+      let valCurrent = this.getMins(this.state.sessionLength);
+      if (valCurrent === 60) {
+        return;
+      }
+      valCurrent += 1;
+      this.setState({ sessionLength: `${valCurrent}:00` });
     }
   };
 
+  /* Decrease a duration on a controller */
   lengthDecreaseHandler = cat => {
     if (cat === 'Break Length') {
-      console.log('break down clicked');
+      let valCurrent = this.getMins(this.state.breakLength);
+      if (valCurrent === 1) {
+        return;
+      }
+      valCurrent -= 1;
+      this.setState({ breakLength: `${valCurrent}:00` });
     }
     if (cat === 'Session Length') {
-      console.log('session down clicked');
+      let valCurrent = this.getMins(this.state.sessionLength);
+      if (valCurrent === 1) {
+        return;
+      }
+      valCurrent -= 1;
+      this.setState({ sessionLength: `${valCurrent}:00` });
     }
   };
 

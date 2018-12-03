@@ -9,15 +9,19 @@ const Controller = props => {
     <div className="col s6">
       <h5>{props.title}</h5>
       <div className="controller">
-        <i
-          className="fas fa-arrow-down"
-          onClick={() => props.lengthDecreased(props.title)}
-        />
+        <button className="btn-arrow">
+          <i
+            className="fas fa-arrow-down"
+            onClick={() => props.lengthDecreased(props.title)}
+          />
+        </button>
         <span className="length">{lengthNum}</span>
-        <i
-          className="fas fa-arrow-up"
-          onClick={() => props.lengthIncreased(props.title)}
-        />
+        <button className="btn-arrow">
+          <i
+            className="fas fa-arrow-up"
+            onClick={() => props.lengthIncreased(props.title)}
+          />
+        </button>
       </div>
     </div>
   );
