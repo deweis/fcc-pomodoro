@@ -11,6 +11,7 @@ const Controller = props => {
       <div className="controller">
         <button className="btn-arrow">
           <i
+            id={`${props.id}-decrement`}
             className="fas fa-arrow-down"
             onClick={() => props.lengthDecreased(props.title)}
           />
