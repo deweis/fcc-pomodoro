@@ -2,17 +2,26 @@ import React, { Component } from 'react';
 import './App.css';
 import Controller from './components/Controller';
 
+let timerInterval;
+
 class App extends Component {
   state = {
     sessionLength: '25:00',
     breakLength: '5:00',
     timeLeft: '25:00',
-    title: 'Pomodoro Clock'
+    title: 'Pomodoro Clock',
+    running: 0,
+    btnLabel: 'Start'
   };
 
   /* Helper function to get the minutes of a full length */
   getMins = length => {
     return Number(length.slice(0, length.indexOf(':')));
+  };
+
+  /* Helper function to get the seconds of a full length */
+  getSecs = length => {
+    return Number(length.slice(length.indexOf(':') + 1));
   };
 
   /* Increase a duration on a controller */
@@ -31,7 +40,10 @@ class App extends Component {
         return;
       }
       valCurrent += 1;
-      this.setState({ sessionLength: `${valCurrent}:00` });
+      this.setState({
+        sessionLength: `${valCurrent}:00`,
+        timeLeft: `${valCurrent}:00`
+      });
     }
   };
 
@@ -51,21 +63,55 @@ class App extends Component {
         return;
       }
       valCurrent -= 1;
-      this.setState({ sessionLength: `${valCurrent}:00` });
+      this.setState({
+        sessionLength: `${valCurrent}:00`,
+        timeLeft: `${valCurrent}:00`
+      });
     }
   };
 
   /* Click the Start Button */
   startClickHandler = () => {
-    this.setState({ title: 'Session' });
+    if (this.state.running === 0) {
+      this.setState({
+        title: 'Session',
+        running: 1,
+        btnLabel: 'Pause'
+      });
+
+      let timer =
+        this.getMins(this.state.timeLeft) * 60 +
+        this.getSecs(this.state.timeLeft);
+
+      timerInterval = setInterval(() => {
+        timer -= 1;
+        let mins = Math.floor(timer / 60);
+        let secs = timer % 60 > 9 ? timer % 60 : `0${timer % 60}`;
+        this.setState({
+          timeLeft: `${mins}:${secs}`
+        });
+      }, 1000);
+    } else {
+      clearInterval(timerInterval);
+      this.setState({
+        title: 'Paused',
+        running: 0,
+        btnLabel: 'Resume'
+      });
+    }
   };
 
   /* Click the Reset Button */
   resetClickHandler = () => {
+    clearInterval(timerInterval);
+
     this.setState({
       sessionLength: '25:00',
       breakLength: '5:00',
-      title: 'Pomodoro Clock'
+      timeLeft: '25:00',
+      title: 'Pomodoro Clock',
+      running: 0,
+      btnLabel: 'Start'
     });
   };
 
@@ -85,7 +131,7 @@ class App extends Component {
                       className="btn"
                       onClick={this.startClickHandler}
                     >
-                      Start
+                      {this.state.btnLabel}
                     </button>
                     <button
                       id="reset"
