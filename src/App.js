@@ -17,12 +17,12 @@ class App extends Component {
     isBreak: 0
   };
 
-  /* Helper function to get the minutes of a full length */
+  /* Helper function to get the minutes in numerical format */
   getMins = length => {
     return Number(length.slice(0, length.indexOf(':')));
   };
 
-  /* Helper function to get the seconds of a full length */
+  /* Helper function to get the seconds in numerical format */
   getSecs = length => {
     return Number(length.slice(length.indexOf(':') + 1));
   };
@@ -92,6 +92,7 @@ class App extends Component {
         this.getMins(this.state.timeLeft) * 60 +
         this.getSecs(this.state.timeLeft);
 
+      /* the timer itself */
       timerInterval = setInterval(() => {
         if (timer === 0 && this.state.isBreak === 0) {
           console.log('break time');
