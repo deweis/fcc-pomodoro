@@ -7,7 +7,7 @@ let timerInterval;
 class App extends Component {
   state = {
     sessionLength: '25:00',
-    breakLength: '5:00',
+    breakLength: '05:00',
     timeLeft: '25:00',
     title: 'Pomodoro Clock',
     running: 0,
@@ -34,8 +34,7 @@ class App extends Component {
       }
       valCurrent += 1;
       this.setState({ breakLength: `${valCurrent}:00` });
-    }
-    if (cat === 'Session Length') {
+    } else if (cat === 'Session Length') {
       let valCurrent = this.getMins(this.state.sessionLength);
       if (valCurrent === 59) {
         return;
@@ -57,8 +56,7 @@ class App extends Component {
       }
       valCurrent -= 1;
       this.setState({ breakLength: `${valCurrent}:00` });
-    }
-    if (cat === 'Session Length') {
+    } else if (cat === 'Session Length') {
       let valCurrent = this.getMins(this.state.sessionLength);
       if (valCurrent === 1) {
         return;
@@ -87,6 +85,7 @@ class App extends Component {
           btnLabel: 'Pause'
         });
       }
+
       let timer =
         this.getMins(this.state.timeLeft) * 60 +
         this.getSecs(this.state.timeLeft);
@@ -117,6 +116,7 @@ class App extends Component {
         }
         timer -= 1;
         let mins = Math.floor(timer / 60);
+        mins = mins < 10 ? `0${mins}` : mins;
         let secs = timer % 60 > 9 ? timer % 60 : `0${timer % 60}`;
         this.setState({
           timeLeft: `${mins}:${secs}`
