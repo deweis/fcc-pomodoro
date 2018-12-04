@@ -3,7 +3,7 @@ import './Controller.css';
 
 const Controller = props => {
   let lengthNum = props.length;
-  lengthNum = lengthNum.slice(0, lengthNum.indexOf(':'));
+  lengthNum = Number(lengthNum.slice(0, lengthNum.indexOf(':')));
 
   return (
     <div className="col s6">
