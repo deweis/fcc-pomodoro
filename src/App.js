@@ -11,7 +11,8 @@ class App extends Component {
     timeLeft: '25:00',
     title: 'Pomodoro Clock',
     running: 0,
-    btnLabel: 'Start'
+    btnLabel: 'Start',
+    isBreak: 0
   };
 
   /* Helper function to get the minutes of a full length */
@@ -73,17 +74,47 @@ class App extends Component {
   /* Click the Start Button */
   startClickHandler = () => {
     if (this.state.running === 0) {
-      this.setState({
-        title: 'Session',
-        running: 1,
-        btnLabel: 'Pause'
-      });
-
+      if (this.state.isBreak === 1) {
+        this.setState({
+          title: 'Break',
+          running: 1,
+          btnLabel: 'Pause'
+        });
+      } else {
+        this.setState({
+          title: 'Session',
+          running: 1,
+          btnLabel: 'Pause'
+        });
+      }
       let timer =
         this.getMins(this.state.timeLeft) * 60 +
         this.getSecs(this.state.timeLeft);
 
       timerInterval = setInterval(() => {
+        if (timer === 0 && this.state.isBreak === 0) {
+          console.log('break time');
+          this.setState({
+            isBreak: 1,
+            timeLeft: this.state.breakLength,
+            title: 'Break'
+          });
+          timer =
+            this.getMins(this.state.timeLeft) * 60 +
+            this.getSecs(this.state.timeLeft) +
+            1;
+        } else if (timer === 0 && this.state.isBreak === 1) {
+          console.log('next session');
+          this.setState({
+            isBreak: 0,
+            timeLeft: this.state.sessionLength,
+            title: 'Session'
+          });
+          timer =
+            this.getMins(this.state.timeLeft) * 60 +
+            this.getSecs(this.state.timeLeft) +
+            1;
+        }
         timer -= 1;
         let mins = Math.floor(timer / 60);
         let secs = timer % 60 > 9 ? timer % 60 : `0${timer % 60}`;
@@ -137,7 +168,7 @@ class App extends Component {
                     </button>
                     <button
                       id="reset"
-                      className="btn"
+                      className="btn red"
                       onClick={this.resetClickHandler}
                     >
                       Reset
