@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import './App.css';
 import Controller from './components/Controller';
 
+const SESSION_LENGTH = '25:00';
+const BREAK_LENGTH = '05:00';
 let timerInterval;
 
 class App extends Component {
   state = {
-    sessionLength: '25:00',
-    breakLength: '05:00',
-    timeLeft: '25:00',
+    sessionLength: SESSION_LENGTH,
+    breakLength: BREAK_LENGTH,
+    timeLeft: SESSION_LENGTH,
     title: 'Pomodoro Clock',
     running: 0,
     btnLabel: 'Start',
@@ -29,14 +31,14 @@ class App extends Component {
   lengthIncreaseHandler = cat => {
     if (cat === 'Break Length') {
       let valCurrent = this.getMins(this.state.breakLength);
-      if (valCurrent === 59) {
+      if (valCurrent === 60) {
         return;
       }
       valCurrent += 1;
       this.setState({ breakLength: `${valCurrent}:00` });
     } else if (cat === 'Session Length') {
       let valCurrent = this.getMins(this.state.sessionLength);
-      if (valCurrent === 59) {
+      if (valCurrent === 60) {
         return;
       }
       valCurrent += 1;
@@ -137,9 +139,9 @@ class App extends Component {
     clearInterval(timerInterval);
 
     this.setState({
-      sessionLength: '25:00',
-      breakLength: '5:00',
-      timeLeft: '25:00',
+      sessionLength: SESSION_LENGTH,
+      breakLength: BREAK_LENGTH,
+      timeLeft: SESSION_LENGTH,
       title: 'Pomodoro Clock',
       running: 0,
       btnLabel: 'Start'
