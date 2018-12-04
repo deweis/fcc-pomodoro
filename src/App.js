@@ -29,6 +29,10 @@ class App extends Component {
 
   /* Increase a duration on a controller */
   lengthIncreaseHandler = cat => {
+    if (this.state.running === 1) {
+      return;
+    }
+
     if (cat === 'Break Length') {
       let valCurrent = this.getMins(this.state.breakLength);
       if (valCurrent === 60) {
@@ -51,6 +55,10 @@ class App extends Component {
 
   /* Decrease a duration on a controller */
   lengthDecreaseHandler = cat => {
+    if (this.state.running === 1) {
+      return;
+    }
+
     if (cat === 'Break Length') {
       let valCurrent = this.getMins(this.state.breakLength);
       if (valCurrent === 1) {
