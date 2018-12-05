@@ -4,6 +4,10 @@ import Controller from './components/Controller';
 
 const SESSION_LENGTH = '25:00';
 const BREAK_LENGTH = '05:00';
+const AUDIO_FILE =
+  'http://sampleswap.org/samples-ghost/%20MAY%202014%20LATEST%20ADDITIONS/PUBLIC%20DOMAIN%20MUSIC/626[kb]buster-brown-gonna-make-you-happy-1943.mp3.mp3';
+const audio = new Audio(AUDIO_FILE);
+audio.load();
 let timerInterval;
 
 class App extends Component {
@@ -83,6 +87,7 @@ class App extends Component {
   startClickHandler = () => {
     if (this.state.running === 0) {
       if (this.state.isBreak === 1) {
+        audio.play();
         this.setState({
           title: 'Break',
           running: 1,
@@ -100,9 +105,11 @@ class App extends Component {
         this.getMins(this.state.timeLeft) * 60 +
         this.getSecs(this.state.timeLeft);
 
-      /* the timer itself */
+      /* the timer interval */
       timerInterval = setInterval(() => {
+        /* the timer reaches 00:00 */
         if (timer === 0 && this.state.isBreak === 0) {
+          audio.play();
           console.log('break time');
           this.setState({
             isBreak: 1,
@@ -113,7 +120,10 @@ class App extends Component {
             this.getMins(this.state.timeLeft) * 60 +
             this.getSecs(this.state.timeLeft) +
             1;
+          /* the break is over */
         } else if (timer === 0 && this.state.isBreak === 1) {
+          audio.pause();
+          audio.currentTime = 0;
           console.log('next session');
           this.setState({
             isBreak: 0,
@@ -134,6 +144,7 @@ class App extends Component {
         });
       }, 1000);
     } else {
+      audio.pause();
       clearInterval(timerInterval);
       this.setState({
         title: 'Paused',
@@ -145,6 +156,8 @@ class App extends Component {
 
   /* Click the Reset Button */
   resetClickHandler = () => {
+    audio.pause();
+    audio.currentTime = 0;
     clearInterval(timerInterval);
 
     this.setState({
@@ -153,7 +166,8 @@ class App extends Component {
       timeLeft: SESSION_LENGTH,
       title: 'Pomodoro Clock',
       running: 0,
-      btnLabel: 'Start'
+      btnLabel: 'Start',
+      isBreak: 0
     });
   };
 
@@ -206,6 +220,9 @@ class App extends Component {
             </div>
           </div>
         </section>
+        <audio id="beep">
+          <source src={AUDIO_FILE} type="audio/mpeg" />
+        </audio>
       </div>
     );
   }
