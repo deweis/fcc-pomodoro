@@ -6,9 +6,6 @@ const SESSION_LENGTH = '25:00';
 const BREAK_LENGTH = '05:00';
 const AUDIO_FILE =
   'http://sampleswap.org/samples-ghost/%20MAY%202014%20LATEST%20ADDITIONS/PUBLIC%20DOMAIN%20MUSIC/626[kb]buster-brown-gonna-make-you-happy-1943.mp3.mp3';
-const audio = new Audio(AUDIO_FILE);
-audio.load();
-let timerInterval;
 
 class App extends Component {
   state = {
@@ -20,6 +17,9 @@ class App extends Component {
     btnLabel: 'Start',
     isBreak: 0
   };
+
+  /* Helper function to grab the audio element */
+  audio = () => document.getElementById('beep');
 
   /* Helper function to get the minutes in numerical format */
   getMins = length => {
@@ -87,13 +87,14 @@ class App extends Component {
   startClickHandler = () => {
     if (this.state.running === 0) {
       if (this.state.isBreak === 1) {
-        audio.play();
+        this.audio().play();
         this.setState({
           title: 'Break',
           running: 1,
           btnLabel: 'Pause'
         });
       } else {
+        this.audio().pause();
         this.setState({
           title: 'Session',
           running: 1,
@@ -106,11 +107,10 @@ class App extends Component {
         this.getSecs(this.state.timeLeft);
 
       /* the timer interval */
-      timerInterval = setInterval(() => {
+      this.timerInterval = setInterval(() => {
         /* the timer reaches 00:00 */
         if (timer === 0 && this.state.isBreak === 0) {
-          audio.play();
-          console.log('break time');
+          this.audio().play();
           this.setState({
             isBreak: 1,
             timeLeft: this.state.breakLength,
@@ -122,9 +122,8 @@ class App extends Component {
             1;
           /* the break is over */
         } else if (timer === 0 && this.state.isBreak === 1) {
-          audio.pause();
-          audio.currentTime = 0;
-          console.log('next session');
+          this.audio().pause();
+          this.audio().currentTime = 0;
           this.setState({
             isBreak: 0,
             timeLeft: this.state.sessionLength,
@@ -144,8 +143,8 @@ class App extends Component {
         });
       }, 1000);
     } else {
-      audio.pause();
-      clearInterval(timerInterval);
+      this.audio().pause();
+      clearInterval(this.timerInterval);
       this.setState({
         title: 'Paused',
         running: 0,
@@ -156,9 +155,9 @@ class App extends Component {
 
   /* Click the Reset Button */
   resetClickHandler = () => {
-    audio.pause();
-    audio.currentTime = 0;
-    clearInterval(timerInterval);
+    this.audio().pause();
+    this.audio().currentTime = 0;
+    clearInterval(this.timerInterval);
 
     this.setState({
       sessionLength: SESSION_LENGTH,
@@ -221,7 +220,7 @@ class App extends Component {
           </div>
         </section>
         <audio id="beep">
-          <source src={AUDIO_FILE} type="audio/mpeg" />
+          <source src={AUDIO_FILE} preload="auto" />
         </audio>
       </div>
     );
